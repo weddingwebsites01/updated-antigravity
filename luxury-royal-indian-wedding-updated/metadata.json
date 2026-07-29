@@ -1,0 +1,6 @@
+{
+  "name": "Luxury Royal Indian Wedding",
+  "description": "An ultra-premium interactive cinematic wedding website experience.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

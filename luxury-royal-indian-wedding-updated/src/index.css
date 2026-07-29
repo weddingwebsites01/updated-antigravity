@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-maroon-900: #4a0404;
+  --color-maroon-800: #5c0a0a;
+  --color-maroon-700: #730d0d;
+  --color-maroon-600: #800000;
+  --color-gold-500: #D4AF37;
+  --color-gold-400: #F3E5AB;
+  --color-ivory-100: #FFFFF0;
+  --color-ivory-200: #FFFAF0;
+  --color-ivory-300: #F5F5DC;
+  
+  --font-display: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-script: "Great Vibes", cursive;
+}
+
+@layer base {
+  html, body {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    max-width: 100vw;
+  }
+  body {
+    @apply bg-ivory-200 text-maroon-900 font-sans antialiased selection:bg-gold-500 selection:text-maroon-900;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-medium tracking-tight;
+  }
+}
