@@ -1,6 +1,6 @@
 export const weddingConfig = {
   heroBannerImage: "/images/banner2.png",
-  musicUrl: "https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3",
+  musicUrl: "/music/song.mp3",
   video: {
     opening: "/video/intro.mp4"
   },
