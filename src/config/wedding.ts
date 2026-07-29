@@ -38,19 +38,19 @@ export const weddingConfig = {
       title: "How We Met",
       date: "August 2022",
       description: "A chance encounter at a mutual friend's art gallery opening. A conversation about a painting led to a coffee date the next day.",
-      image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=800",
+      image: "/images/s1.jpeg",
     },
     {
       title: "The First Date",
       date: "September 2022",
       description: "A beautiful evening by the lake, talking for hours until the stars came out. We knew there was something special.",
-      image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800",
+      image: "/images/s2.jpeg",
     },
     {
       title: "The Proposal",
       date: "December 2025",
       description: "A surprise trip to Udaipur. Overlooking the Pichola lake at sunset, Vikram went down on one knee.",
-      image: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800",
+      image: "/images/s3.jpeg",
     }
   ],
   events: [
