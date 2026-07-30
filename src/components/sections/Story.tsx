@@ -29,11 +29,11 @@ export function Story() {
               }`}
             >
               <div className="w-full md:w-1/2">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-tl-[80px] rounded-br-[80px] border-2 border-gold-500/30">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-tl-[80px] rounded-br-[80px] border-2 border-gold-500/30 shadow-xl group cursor-pointer">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transform group-hover:scale-[1.03] group-active:scale-[0.98] transition-transform duration-300 ease-out"
                     loading="eager"
                   />
                 </div>

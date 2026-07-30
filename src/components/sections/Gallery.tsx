@@ -24,12 +24,12 @@ export function Gallery() {
           {weddingConfig.gallery.map((img, index) => (
             <div
               key={index}
-              className="break-inside-avoid overflow-hidden rounded-xl border border-gold-500/20 shadow-md"
+              className="break-inside-avoid overflow-hidden rounded-xl border border-gold-500/20 shadow-md group cursor-pointer"
             >
               <img
                 src={img}
                 alt="Gallery moment"
-                className="w-full h-auto block"
+                className="w-full h-auto block transform group-hover:scale-[1.03] group-active:scale-[0.98] transition-transform duration-300 ease-out"
                 loading="eager"
               />
             </div>
