@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { weddingConfig } from "../../config/wedding";
 import { ScratchCard } from "../ScratchCard";
 import { Countdown } from "../Countdown";
@@ -17,36 +16,24 @@ export function Hero() {
           alt="Royal Wedding Banner"
           className="w-full h-full object-cover object-[center_30%] filter brightness-[0.85] contrast-[1.15]"
         />
-        {/* Subtle royal gradient vignette & gold inner frame */}
+        {/* Royal gradient vignette & gold inner frame */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-black/95" />
         <div className="absolute inset-3 sm:inset-6 md:inset-8 border border-gold-500/30 pointer-events-none rounded-none" />
       </div>
 
       <div className="container mx-auto px-2 sm:px-6 relative z-10 text-center flex flex-col items-center max-w-5xl my-auto">
         {/* Header Invitation Taglines */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="space-y-2 mb-3 sm:mb-4"
-        >
+        <div className="space-y-2 mb-3 sm:mb-4">
           <span className="text-gold-400 font-display tracking-[0.3em] uppercase text-xs sm:text-sm font-semibold block drop-shadow-md">
             Together With Their Families
           </span>
           <span className="text-ivory-200/90 font-sans tracking-[0.2em] uppercase text-[10px] sm:text-xs block">
             Cordially Invite You To Celebrate The Royal Wedding Of
           </span>
-        </motion.div>
+        </div>
 
         {/* Couple Names Overlay */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="my-2 sm:my-3 w-full flex flex-col items-center justify-center px-2"
-        >
+        <div className="my-2 sm:my-3 w-full flex flex-col items-center justify-center px-2">
           <h1 className="font-script text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] text-gold-400 leading-[1.05] sm:leading-none drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] tracking-wide font-bold">
             {weddingConfig.bride.name}
           </h1>
@@ -56,16 +43,10 @@ export function Hero() {
           <h1 className="font-script text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[10.5rem] text-gold-400 leading-[1.05] sm:leading-none drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] tracking-wide font-bold">
             {weddingConfig.groom.name}
           </h1>
-        </motion.div>
+        </div>
 
         {/* Wedding Date & Location */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-1 mb-4 text-center"
-        >
+        <div className="mt-1 mb-4 text-center">
           <div className="w-20 h-[1.5px] bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mb-3 opacity-80" />
           <p className="font-display tracking-[0.2em] text-gold-400 uppercase text-xs sm:text-base font-semibold drop-shadow-md">
             {new Date(weddingConfig.weddingDate).toLocaleDateString("en-US", {
@@ -80,21 +61,15 @@ export function Hero() {
           <p className="mt-1 text-gold-500/90 tracking-widest text-[11px] uppercase font-mono">
             {weddingConfig.hashtag}
           </p>
-        </motion.div>
+        </div>
 
         {/* Live Countdown Timer */}
         <Countdown />
 
         {/* Scratch Card for Interactive Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full max-w-xl mx-auto"
-        >
+        <div className="w-full max-w-xl mx-auto">
           <ScratchCard />
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Down Indicator */}

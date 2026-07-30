@@ -22,8 +22,7 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
       try {
         await audio.play();
         setIsPlaying(true);
-      } catch (err) {
-        // Browser prevented un-prompts autoplay
+      } catch {
         setIsPlaying(false);
       }
     };
@@ -32,7 +31,6 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
       startPlay();
     }
 
-    // Global listener to immediately start audio on ANY first user interaction anywhere
     const handleFirstInteraction = () => {
       if (audioRef.current && audioRef.current.paused) {
         audioRef.current
@@ -45,13 +43,11 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
     window.addEventListener("click", handleFirstInteraction, { capture: true });
     window.addEventListener("touchstart", handleFirstInteraction, { capture: true });
     window.addEventListener("pointerdown", handleFirstInteraction, { capture: true });
-    window.addEventListener("keydown", handleFirstInteraction, { capture: true });
 
     return () => {
       window.removeEventListener("click", handleFirstInteraction, { capture: true });
       window.removeEventListener("touchstart", handleFirstInteraction, { capture: true });
       window.removeEventListener("pointerdown", handleFirstInteraction, { capture: true });
-      window.removeEventListener("keydown", handleFirstInteraction, { capture: true });
     };
   }, [autoStart]);
 
@@ -66,7 +62,7 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
       audio
         .play()
         .then(() => setIsPlaying(true))
-        .catch((err) => console.log("Audio play error:", err));
+        .catch(() => {});
     }
   };
 
@@ -83,13 +79,12 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
 
       <button
         onClick={togglePlay}
-        className="bg-maroon-900/90 text-gold-400 border border-gold-500/50 hover:bg-gold-500 hover:text-maroon-900 transition-all duration-300 p-3 rounded-full shadow-2xl flex items-center space-x-2 group backdrop-blur-md"
+        className="bg-maroon-900 text-gold-400 border border-gold-500/50 hover:bg-gold-500 hover:text-maroon-900 transition-colors p-3 rounded-full shadow-2xl flex items-center space-x-2 group cursor-pointer"
         title={isPlaying ? "Pause Music" : "Play Royal Wedding Music"}
         aria-label="Toggle Background Music"
       >
         <Music className={`w-5 h-5 ${isPlaying ? "animate-pulse text-gold-400" : ""}`} />
 
-        {/* Animated Equalizer Wave lines */}
         {isPlaying && (
           <div className="flex items-end gap-[2px] h-4 w-4 overflow-hidden py-[2px]">
             <span className="w-1 bg-gold-400 rounded-full animate-[bounce_0.8s_infinite]" />
@@ -106,7 +101,7 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
       {isPlaying && (
         <button
           onClick={toggleMute}
-          className="bg-maroon-900/80 text-gold-400 border border-gold-500/30 hover:bg-maroon-900 transition-all p-2.5 rounded-full shadow-lg backdrop-blur-md"
+          className="bg-maroon-900 text-gold-400 border border-gold-500/30 hover:bg-maroon-800 transition-colors p-2.5 rounded-full shadow-lg cursor-pointer"
           title={isMuted ? "Unmute" : "Mute"}
         >
           {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -115,4 +110,3 @@ export function AudioPlayer({ autoStart = true }: AudioPlayerProps) {
     </div>
   );
 }
-

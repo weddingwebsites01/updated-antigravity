@@ -1,9 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function GoldParticles() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if mobile device
+    const mobileCheck =
+      window.innerWidth < 768 ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0;
+
+    if (mobileCheck) {
+      setIsMobile(true);
+      return; // Completely disable canvas loop on mobile for max GPU performance
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -14,9 +26,6 @@ export function GoldParticles() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const isMobile = width < 768 || ("ontouchstart" in window);
-    const particleCount = isMobile ? 14 : 28;
-
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
@@ -25,22 +34,21 @@ export function GoldParticles() {
 
     window.addEventListener("resize", handleResize, { passive: true });
 
-    const particles = Array.from({ length: particleCount }, () => ({
+    const particles = Array.from({ length: 24 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       radius: Math.random() * 1.5 + 0.8,
       color: Math.random() > 0.3 ? "rgba(212, 175, 55," : "rgba(243, 229, 171,",
-      alpha: Math.random() * 0.6 + 0.3,
+      alpha: Math.random() * 0.5 + 0.2,
       speedY: -(Math.random() * 0.3 + 0.1),
-      speedX: (Math.random() - 0.5) * 0.25,
+      speedX: (Math.random() - 0.5) * 0.2,
       pulse: Math.random() * 0.015 + 0.005,
     }));
 
     let lastTime = performance.now();
 
     const render = (currentTime: number) => {
-      // Limit to ~60fps
-      if (currentTime - lastTime < 16) {
+      if (currentTime - lastTime < 20) {
         animationFrameId = requestAnimationFrame(render);
         return;
       }
@@ -54,7 +62,6 @@ export function GoldParticles() {
         p.x += p.speedX;
         p.alpha += Math.sin(currentTime * 0.002) * p.pulse;
 
-        // Wrap around bounds
         if (p.y < -10) {
           p.y = height + 10;
           p.x = Math.random() * width;
@@ -62,7 +69,7 @@ export function GoldParticles() {
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
 
-        const currentAlpha = Math.max(0.15, Math.min(0.75, Math.abs(p.alpha)));
+        const currentAlpha = Math.max(0.1, Math.min(0.6, Math.abs(p.alpha)));
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -81,10 +88,12 @@ export function GoldParticles() {
     };
   }, []);
 
+  if (isMobile) return null;
+
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-20 opacity-60 w-full h-full"
+      className="fixed inset-0 pointer-events-none z-20 opacity-50 w-full h-full"
     />
   );
 }

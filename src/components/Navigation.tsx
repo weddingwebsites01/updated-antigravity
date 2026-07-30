@@ -19,7 +19,6 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  // Track active section via IntersectionObserver
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map((item) => document.getElementById(item.id));
@@ -42,21 +41,18 @@ export function Navigation() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          "fixed top-0 left-0 right-0 z-50 transition-colors duration-300",
           scrolled
-            ? "bg-maroon-900/90 backdrop-blur-md py-3 shadow-[0_4px_20px_rgba(0,0,0,0.6)] border-b border-gold-500/30"
-            : "bg-gradient-to-b from-black/85 via-black/40 to-transparent py-4 sm:py-6"
+            ? "bg-maroon-900 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.6)] border-b border-gold-500/30"
+            : "bg-gradient-to-b from-black/90 via-black/50 to-transparent py-4 sm:py-6"
         )}
       >
         <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
           <a
             href="#home"
-            className="font-script text-2xl sm:text-3xl tracking-wider font-bold text-gold-400 drop-shadow-md flex items-center gap-2"
+            className="font-script text-2xl sm:text-3xl tracking-wider font-bold text-gold-400 drop-shadow flex items-center gap-2"
           >
             <Crown className="w-5 h-5 text-gold-400 hidden xs:inline-block" />
             {weddingConfig.bride.name} & {weddingConfig.groom.name}
@@ -71,19 +67,14 @@ export function Navigation() {
                   key={item.id}
                   href={item.href}
                   className={cn(
-                    "relative py-1 text-xs sm:text-sm font-display font-medium tracking-[0.2em] uppercase transition-colors duration-300 hover:text-gold-400",
-                    isActive ? "text-gold-400" : "text-ivory-200/80"
+                    "relative py-1 text-xs sm:text-sm font-display font-medium tracking-[0.2em] uppercase transition-colors duration-200 hover:text-gold-400",
+                    isActive ? "text-gold-400 font-bold" : "text-ivory-200/80"
                   )}
                 >
                   {item.label}
 
-                  {/* Smooth Sliding Underline Indicator */}
                   {isActive && (
-                    <motion.div
-                      layoutId="activeNavTab"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500 shadow-[0_0_8px_rgba(212,175,55,0.8)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
+                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold-400" />
                   )}
                 </a>
               );
@@ -99,28 +90,25 @@ export function Navigation() {
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Luxury Mobile Navigation Overlay */}
+      {/* Mobile Navigation Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: "0%" }}
             exit={{ opacity: 0, y: "-100%" }}
-            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-40 bg-maroon-900/98 backdrop-blur-2xl flex flex-col items-center justify-center space-y-8 px-6 text-center border-b-2 border-gold-500/40"
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed inset-0 z-40 bg-maroon-900 flex flex-col items-center justify-center space-y-8 px-6 text-center border-b-2 border-gold-500/40"
           >
             <div className="w-16 h-16 rounded-full border border-gold-500/40 flex items-center justify-center mb-2">
               <Crown className="w-8 h-8 text-gold-400" />
             </div>
 
-            {navItems.map((item, index) => (
-              <motion.a
+            {navItems.map((item) => (
+              <a
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 + 0.1 }}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
@@ -131,7 +119,7 @@ export function Navigation() {
                 )}
               >
                 {item.label}
-              </motion.a>
+              </a>
             ))}
           </motion.div>
         )}

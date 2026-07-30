@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, RefreshCw, Crown } from "lucide-react";
 import { triggerPartyPopper } from "./PartyPopper";
 import { weddingConfig } from "../config/wedding";
@@ -165,7 +164,6 @@ export function ScratchCard({
     }
 
     const percentage = (transparentPixels / (pixels.length / 16)) * 100;
-    // Easily scratchable threshold (18%)
     if (percentage > 18) {
       handleReveal();
     }
@@ -198,7 +196,6 @@ export function ScratchCard({
     const y = (clientY - rect.top) * dpr;
 
     ctx.globalCompositeOperation = "destination-out";
-    // Extra thick scratch stroke for effortless scratchability (75px)
     ctx.lineWidth = 75 * dpr;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -259,7 +256,6 @@ export function ScratchCard({
     setIsRevealed(true);
     if (!hasFiredConfettiRef.current) {
       hasFiredConfettiRef.current = true;
-      // Party popper confetti explosion upon scratch card reveal
       triggerPartyPopper();
     }
   };
@@ -273,14 +269,9 @@ export function ScratchCard({
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto my-8 px-4">
-      {/* Featured Glass Header */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        className="relative bg-maroon-900/85 backdrop-blur-md border-2 border-gold-500/50 rounded-2xl p-5 sm:p-6 mb-5 text-center shadow-[0_10px_35px_rgba(0,0,0,0.8)] overflow-hidden group"
-      >
+    <div className="w-full max-w-xl mx-auto my-6 px-4">
+      {/* Featured Header (Solid Maroon without backdrop-blur) */}
+      <div className="relative bg-maroon-900 border-2 border-gold-500/50 rounded-2xl p-5 sm:p-6 mb-5 text-center shadow-[0_10px_35px_rgba(0,0,0,0.8)] overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500" />
 
         <div className="flex items-center justify-center gap-2 mb-2">
@@ -298,21 +289,15 @@ export function ScratchCard({
         </h3>
 
         <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-3" />
-      </motion.div>
+      </div>
 
       {/* Foil Scratch Card Container */}
       <div
         ref={containerRef}
         className="relative min-h-[230px] sm:min-h-[250px] w-full rounded-2xl overflow-hidden border-2 border-gold-500/60 shadow-[0_15px_45px_rgba(0,0,0,0.9)] bg-maroon-900 flex items-center justify-center select-none"
       >
-        {/* Revealed Content Behind Scratch Layer */}
         <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center bg-gradient-to-b from-maroon-900 via-maroon-800 to-maroon-900 border border-gold-500/40">
-          <motion.div
-            initial={{ scale: 0.85, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-3"
-          >
+          <div className="space-y-3">
             <div className="flex items-center justify-center gap-2">
               <Sparkles className="w-4 h-4 text-gold-400" />
               <span className="text-gold-400 font-display text-xs tracking-[0.2em] uppercase font-semibold">
@@ -332,28 +317,23 @@ export function ScratchCard({
             <p className="text-xs sm:text-sm text-ivory-200/90 font-sans italic max-w-md mx-auto">
               "{blessingText}"
             </p>
-          </motion.div>
+          </div>
         </div>
 
         {/* Scratch Canvas Overlay */}
-        <AnimatePresence>
-          {!isRevealed && (
-            <motion.canvas
-              ref={canvasRef}
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.6 }}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              className="absolute inset-0 cursor-crosshair touch-none z-10 w-full h-full"
-            />
-          )}
-        </AnimatePresence>
+        {!isRevealed && (
+          <canvas
+            ref={canvasRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="absolute inset-0 cursor-crosshair touch-none z-10 w-full h-full"
+          />
+        )}
       </div>
 
       {/* Quick Reveal / Reset Actions */}
@@ -361,14 +341,14 @@ export function ScratchCard({
         {!isRevealed ? (
           <button
             onClick={handleReveal}
-            className="px-6 py-2.5 rounded-full bg-maroon-900/80 border border-gold-500/50 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 transition-all duration-300 shadow-md cursor-pointer font-semibold"
+            className="px-6 py-2.5 rounded-full bg-maroon-900 border border-gold-500/50 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 transition-colors shadow-md cursor-pointer font-semibold"
           >
             Quick Reveal
           </button>
         ) : (
           <button
             onClick={resetCard}
-            className="px-6 py-2.5 rounded-full bg-maroon-900/80 border border-gold-500/50 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 flex items-center gap-2 transition-all duration-300 shadow-md cursor-pointer font-semibold"
+            className="px-6 py-2.5 rounded-full bg-maroon-900 border border-gold-500/50 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 flex items-center gap-2 transition-colors shadow-md cursor-pointer font-semibold"
           >
             <RefreshCw className="w-3.5 h-3.5" /> Scratch Again
           </button>

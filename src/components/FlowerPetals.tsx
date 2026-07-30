@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Petal {
   x: number;
@@ -14,8 +14,20 @@ interface Petal {
 
 export function FlowerPetals() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if mobile device
+    const mobileCheck =
+      window.innerWidth < 768 ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0;
+
+    if (mobileCheck) {
+      setIsMobile(true);
+      return; // Disable on mobile to prevent frame drops
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -25,9 +37,6 @@ export function FlowerPetals() {
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
-
-    const isMobile = width < 768 || ("ontouchstart" in window);
-    const petalCount = isMobile ? 14 : 28;
 
     const handleResize = () => {
       if (!canvas) return;
@@ -42,22 +51,21 @@ export function FlowerPetals() {
     const createPetal = (): Petal => ({
       x: Math.random() * width,
       y: Math.random() * height - height,
-      size: Math.random() * 10 + 6,
-      speedY: Math.random() * 1.0 + 0.5,
-      speedX: Math.random() * 0.6 - 0.3,
+      size: Math.random() * 8 + 5,
+      speedY: Math.random() * 0.8 + 0.4,
+      speedX: Math.random() * 0.5 - 0.25,
       rotation: Math.random() * Math.PI * 2,
       rotationSpeed: (Math.random() - 0.5) * 0.02,
-      opacity: Math.random() * 0.5 + 0.3,
+      opacity: Math.random() * 0.4 + 0.2,
       color: colors[Math.floor(Math.random() * colors.length)],
     });
 
-    const petals: Petal[] = Array.from({ length: petalCount }, createPetal);
+    const petals: Petal[] = Array.from({ length: 20 }, createPetal);
 
     let lastTime = performance.now();
 
     const render = (currentTime: number) => {
-      // Limit to ~60fps
-      if (currentTime - lastTime < 16) {
+      if (currentTime - lastTime < 20) {
         animationFrameId = requestAnimationFrame(render);
         return;
       }
@@ -84,7 +92,6 @@ export function FlowerPetals() {
         ctx.globalAlpha = p.opacity;
         ctx.fillStyle = p.color;
 
-        // Optimized fast petal path
         ctx.beginPath();
         ctx.ellipse(0, 0, p.size / 2, p.size, 0, 0, Math.PI * 2);
         ctx.fill();
@@ -102,10 +109,12 @@ export function FlowerPetals() {
     };
   }, []);
 
+  if (isMobile) return null;
+
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-20 w-full h-full opacity-70"
+      className="fixed inset-0 pointer-events-none z-20 w-full h-full opacity-60"
     />
   );
 }
