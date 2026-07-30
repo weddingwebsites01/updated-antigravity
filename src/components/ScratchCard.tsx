@@ -20,11 +20,12 @@ export function ScratchCard({
   const lastPosRef = useRef<{ x: number; y: number } | null>(null);
   const hasFiredConfettiRef = useRef(false);
   const lastVibrateTimeRef = useRef(0);
+  const animFrameRef = useRef<number | null>(null);
 
   const [isRevealed, setIsRevealed] = useState(false);
   const [isScratching, setIsScratching] = useState(false);
 
-  // Setup Metallic Gold Foil Texture with procedural shimmer
+  // Ultra-Luxury Gold Foil Drawing Function
   const setupCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || isRevealed) return;
@@ -35,69 +36,153 @@ export function ScratchCard({
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    // Use device pixel ratio for ultra-crisp resolution on mobile screens
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
 
-    // Reset composite operation to normal draw
+    const w = rect.width;
+    const h = rect.height;
+
+    // Reset composite operation to normal
     ctx.globalCompositeOperation = "source-over";
 
-    // 1. Rich Metallic Gold Foil Gradient
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, "#B8860B"); // Dark Goldenrod
-    gradient.addColorStop(0.2, "#FFD700"); // Gold
-    gradient.addColorStop(0.4, "#FFF8DC"); // Cornsilk highlight
-    gradient.addColorStop(0.6, "#D4AF37"); // Metallic Gold
-    gradient.addColorStop(0.8, "#AA7C11"); // Rich Dark Gold
-    gradient.addColorStop(1, "#5C0A0A"); // Deep Maroon Edge
+    // 1. Rich Radial & Linear Metallic Gold Base
+    const linearGrad = ctx.createLinearGradient(0, 0, w, h);
+    linearGrad.addColorStop(0, "#8B6508"); // Dark Gold
+    linearGrad.addColorStop(0.2, "#D4AF37"); // Champagne Gold
+    linearGrad.addColorStop(0.5, "#FFF8DC"); // Cornsilk Specular Highlight
+    linearGrad.addColorStop(0.7, "#C59B27"); // Metallic Gold
+    linearGrad.addColorStop(1, "#4A0404"); // Deep Maroon Vignette
 
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = linearGrad;
+    ctx.fillRect(0, 0, w, h);
 
-    // 2. Subtle Micro Foil Grain Pattern
-    ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-    for (let i = 0; i < canvas.width; i += 6) {
-      for (let j = 0; j < canvas.height; j += 6) {
-        if ((i + j) % 12 === 0) {
-          ctx.fillRect(i, j, 3, 3);
-        }
+    // 2. Luxury Radial Specular Highlight in Center
+    const radialGrad = ctx.createRadialGradient(w / 2, h / 2, 10, w / 2, h / 2, w / 1.5);
+    radialGrad.addColorStop(0, "rgba(255, 250, 205, 0.4)");
+    radialGrad.addColorStop(0.6, "rgba(212, 175, 55, 0.1)");
+    radialGrad.addColorStop(1, "rgba(0, 0, 0, 0.2)");
+    ctx.fillStyle = radialGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // 3. Royal Interlocking Filigree Diamond Texture Overlay
+    ctx.strokeStyle = "rgba(255, 215, 0, 0.12)";
+    ctx.lineWidth = 1;
+    const patternSize = 24;
+    for (let x = 0; x < w + patternSize; x += patternSize) {
+      for (let y = 0; y < h + patternSize; y += patternSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, y - patternSize / 2);
+        ctx.lineTo(x + patternSize / 2, y);
+        ctx.lineTo(x, y + patternSize / 2);
+        ctx.lineTo(x - patternSize / 2, y);
+        ctx.closePath();
+        ctx.stroke();
       }
     }
 
-    // 3. Shimmer Metallic Diagonal Streaks
-    const shimmerGrad = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    shimmerGrad.addColorStop(0, "rgba(255, 255, 255, 0)");
-    shimmerGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.3)");
-    shimmerGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
-    ctx.fillStyle = shimmerGrad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // 4. Gold Ornate Border Frame
+    // 4. Double Gold Embossed Border Frame
     ctx.strokeStyle = "#FFD700";
-    ctx.lineWidth = 8;
-    ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
+    ctx.lineWidth = 4;
+    ctx.strokeRect(6, 6, w - 12, h - 12);
 
-    ctx.strokeStyle = "#5C0A0A";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+    ctx.strokeStyle = "rgba(74, 4, 4, 0.7)";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(11, 11, w - 22, h - 22);
 
-    // 5. Center Scratch Text Prompt with drop shadow
-    ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
-    ctx.shadowBlur = 6;
-    ctx.shadowOffsetY = 2;
+    ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(14, 14, w - 28, h - 28);
+
+    // Corner Filigree Ornaments
+    ctx.fillStyle = "#FFD700";
+    ctx.font = "12px serif";
+    ctx.fillText("❖", 18, 25);
+    ctx.fillText("❖", w - 26, 25);
+    ctx.fillText("❖", 18, h - 16);
+    ctx.fillText("❖", w - 26, h - 16);
+
+    // 5. Center Royal Crest Monogram Badge
+    const sealR = Math.min(w, h) * 0.24;
+    ctx.save();
+    ctx.translate(w / 2, h / 2);
+
+    // Badge Shadow
+    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetY = 4;
+
+    // Badge Outer Circle
     ctx.fillStyle = "#4A0404";
-    ctx.font = "bold 15px 'Playfair Display', serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("✨ SCRATCH WITH CURSOR OR FINGER TO REVEAL ✨", canvas.width / 2, canvas.height / 2);
+    ctx.beginPath();
+    ctx.arc(0, 0, sealR, 0, Math.PI * 2);
+    ctx.fill();
 
     ctx.shadowBlur = 0;
     ctx.shadowOffsetY = 0;
+
+    // Badge Inner Gold Border
+    ctx.strokeStyle = "#D4AF37";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, sealR - 3, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.strokeStyle = "rgba(255, 248, 220, 0.5)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(0, 0, sealR - 7, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Crown Icon inside Seal
+    ctx.fillStyle = "#FFD700";
+    ctx.font = `${Math.round(sealR * 0.55)}px serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("👑", 0, -sealR * 0.18);
+
+    // Names inside Seal
+    ctx.fillStyle = "#FFF8DC";
+    ctx.font = `bold ${Math.round(sealR * 0.32)}px 'Great Vibes', cursive`;
+    ctx.fillText(`${weddingConfig.bride.name} & ${weddingConfig.groom.name}`, 0, sealR * 0.38);
+
+    ctx.restore();
+
+    // 6. Scratch Prompt Pill Banner Below Badge
+    const bannerW = Math.min(w * 0.75, 280);
+    const bannerH = 32;
+    const bannerX = (w - bannerW) / 2;
+    const bannerY = h / 2 + sealR + 10;
+
+    if (bannerY + bannerH < h - 16) {
+      ctx.save();
+      ctx.fillStyle = "#4A0404";
+      ctx.strokeStyle = "#D4AF37";
+      ctx.lineWidth = 1.5;
+
+      ctx.beginPath();
+      ctx.roundRect(bannerX, bannerY, bannerW, bannerH, 16);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#FFD700";
+      ctx.font = "bold 11px 'Playfair Display', serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("✨ SCRATCH TO REVEAL DATE ✨", w / 2, bannerY + bannerH / 2);
+      ctx.restore();
+    }
   }, [isRevealed]);
 
   useEffect(() => {
     setupCanvas();
-    window.addEventListener("resize", setupCanvas);
-    return () => window.removeEventListener("resize", setupCanvas);
+    window.addEventListener("resize", setupCanvas, { passive: true });
+    return () => {
+      window.removeEventListener("resize", setupCanvas);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
   }, [setupCanvas]);
 
   const checkScratchPercentage = () => {
@@ -111,22 +196,23 @@ export function ScratchCard({
     const pixels = imageData.data;
     let transparentPixels = 0;
 
-    for (let i = 3; i < pixels.length; i += 4) {
+    // Sample every 4th pixel for performance
+    for (let i = 3; i < pixels.length; i += 16) {
       if (pixels[i] === 0) transparentPixels++;
     }
 
-    const percentage = (transparentPixels / (pixels.length / 4)) * 100;
-    if (percentage > 35) {
+    const percentage = (transparentPixels / (pixels.length / 16)) * 100;
+    if (percentage > 32) {
       handleReveal();
     }
   };
 
   const triggerVibration = () => {
     const now = Date.now();
-    if (now - lastVibrateTimeRef.current > 70) {
+    if (now - lastVibrateTimeRef.current > 80) {
       if (typeof window !== "undefined" && "vibrate" in navigator) {
         try {
-          navigator.vibrate(12);
+          navigator.vibrate(10);
         } catch {
           // Ignore vibrate restrictions
         }
@@ -143,11 +229,12 @@ export function ScratchCard({
     if (!ctx) return;
 
     const rect = canvas.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const x = (clientX - rect.left) * dpr;
+    const y = (clientY - rect.top) * dpr;
 
     ctx.globalCompositeOperation = "destination-out";
-    ctx.lineWidth = 44;
+    ctx.lineWidth = 48 * dpr;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
@@ -156,7 +243,7 @@ export function ScratchCard({
       ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
       ctx.lineTo(x, y);
     } else {
-      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.arc(x, y, 24 * dpr, 0, Math.PI * 2);
     }
     ctx.stroke();
 
@@ -226,21 +313,21 @@ export function ScratchCard({
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        className="relative bg-maroon-900/80 backdrop-blur-lg border-2 border-gold-500/50 rounded-2xl p-6 mb-6 text-center shadow-[0_10px_30px_rgba(0,0,0,0.8)] overflow-hidden group"
+        className="relative bg-maroon-900/85 backdrop-blur-lg border-2 border-gold-500/50 rounded-2xl p-5 sm:p-6 mb-6 text-center shadow-[0_10px_35px_rgba(0,0,0,0.8)] overflow-hidden group"
       >
         {/* Golden Shimmer Accent Top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500" />
 
         {/* Decorative Corner Ornaments */}
-        <div className="absolute top-2 left-2 text-gold-400/40 text-xs pointer-events-none">❖</div>
-        <div className="absolute top-2 right-2 text-gold-400/40 text-xs pointer-events-none">❖</div>
-        <div className="absolute bottom-2 left-2 text-gold-400/40 text-xs pointer-events-none">❖</div>
-        <div className="absolute bottom-2 right-2 text-gold-400/40 text-xs pointer-events-none">❖</div>
+        <div className="absolute top-2 left-2 text-gold-400/50 text-xs pointer-events-none">❖</div>
+        <div className="absolute top-2 right-2 text-gold-400/50 text-xs pointer-events-none">❖</div>
+        <div className="absolute bottom-2 left-2 text-gold-400/50 text-xs pointer-events-none">❖</div>
+        <div className="absolute bottom-2 right-2 text-gold-400/50 text-xs pointer-events-none">❖</div>
 
         <div className="flex items-center justify-center gap-2 mb-2">
           <Crown className="w-5 h-5 text-gold-400" />
           <span className="text-gold-400 font-display tracking-[0.3em] uppercase text-xs font-semibold">
-            Interactive Invitation Card
+            Interactive Royal Invitation
           </span>
           <Crown className="w-5 h-5 text-gold-400" />
         </div>
@@ -257,10 +344,10 @@ export function ScratchCard({
       {/* Foil Scratch Card Container */}
       <div
         ref={containerRef}
-        className="relative min-h-[220px] w-full rounded-2xl overflow-hidden border-2 border-gold-500/60 shadow-[0_15px_40px_rgba(0,0,0,0.9)] bg-ivory-100 flex items-center justify-center select-none"
+        className="relative min-h-[230px] sm:min-h-[250px] w-full rounded-2xl overflow-hidden border-2 border-gold-500/60 shadow-[0_15px_45px_rgba(0,0,0,0.9)] bg-maroon-900 flex items-center justify-center select-none"
       >
         {/* Revealed Content Behind Scratch Layer */}
-        <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center bg-gradient-to-b from-maroon-900 via-maroon-800 to-maroon-900 border border-gold-500/30">
+        <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center bg-gradient-to-b from-maroon-900 via-maroon-800 to-maroon-900 border border-gold-500/40">
           <motion.div
             initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -279,7 +366,7 @@ export function ScratchCard({
               {weddingConfig.bride.name} & {weddingConfig.groom.name}
             </p>
 
-            <p className="font-display text-lg sm:text-2xl text-ivory-100 tracking-wider uppercase font-semibold border-y border-gold-500/30 py-2 my-1">
+            <p className="font-display text-lg sm:text-2xl text-ivory-100 tracking-wider uppercase font-semibold border-y border-gold-500/40 py-2 my-1">
               {dateText}
             </p>
 
@@ -289,7 +376,7 @@ export function ScratchCard({
           </motion.div>
         </div>
 
-        {/* Scratch Canvas Overlay */}
+        {/* Ultra-Luxury Scratch Canvas Overlay */}
         <AnimatePresence>
           {!isRevealed && (
             <motion.canvas
@@ -315,14 +402,14 @@ export function ScratchCard({
         {!isRevealed ? (
           <button
             onClick={handleReveal}
-            className="px-5 py-2 rounded-full bg-maroon-900/60 border border-gold-500/40 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 transition-all duration-300 shadow-md cursor-pointer"
+            className="px-6 py-2.5 rounded-full bg-maroon-900/80 border border-gold-500/50 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 transition-all duration-300 shadow-md cursor-pointer font-semibold"
           >
             Quick Reveal
           </button>
         ) : (
           <button
             onClick={resetCard}
-            className="px-5 py-2 rounded-full bg-maroon-900/60 border border-gold-500/40 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 flex items-center gap-2 transition-all duration-300 shadow-md cursor-pointer"
+            className="px-6 py-2.5 rounded-full bg-maroon-900/80 border border-gold-500/50 text-gold-400 text-xs font-display tracking-widest uppercase hover:bg-gold-500 hover:text-maroon-900 flex items-center gap-2 transition-all duration-300 shadow-md cursor-pointer font-semibold"
           >
             <RefreshCw className="w-3.5 h-3.5" /> Scratch Again
           </button>
