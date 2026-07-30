@@ -29,14 +29,13 @@ export function Story() {
               }`}
             >
               <div className="w-full md:w-1/2">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-tl-[80px] rounded-br-[80px] shadow-xl border-2 border-gold-500/30">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-tl-[80px] rounded-br-[80px] border-2 border-gold-500/30">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover"
-                    loading="lazy"
+                    loading="eager"
                   />
-                  <div className="absolute inset-0 bg-maroon-900/10 mix-blend-overlay" />
                 </div>
               </div>
 

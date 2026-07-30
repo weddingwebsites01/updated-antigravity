@@ -1,8 +1,8 @@
 export const weddingConfig = {
-  heroBannerImage: "/images/banner2.webp",
+  heroBannerImage: "/images/banner2.png",
   musicUrl: "/music/song.mp3",
   video: {
-    opening: "/video/intro.mp4"
+    opening: "/video/intro.mp4",
   },
   venueLocation: {
     name: "The Royal Palace Gardens",
@@ -26,32 +26,32 @@ export const weddingConfig = {
   quote: "Two souls with but a single thought, two hearts that beat as one.",
   theme: {
     colors: {
-      primary: "#800000", // Deep Maroon
-      secondary: "#F5F5DC", // Beige/Cream
-      accent: "#D4AF37", // Champagne Gold
-      background: "#FFFAF0", // Ivory
-      text: "#333333", // Dark grey for readability
-    }
+      primary: "#800000",
+      secondary: "#F5F5DC",
+      accent: "#D4AF37",
+      background: "#FFFAF0",
+      text: "#333333",
+    },
   },
   story: [
     {
       title: "How We Met",
       date: "August 2022",
       description: "A chance encounter at a mutual friend's art gallery opening. A conversation about a painting led to a coffee date the next day.",
-      image: "/images/s1.webp",
+      image: "/images/s1.jpeg",
     },
     {
       title: "The First Date",
       date: "September 2022",
       description: "A beautiful evening by the lake, talking for hours until the stars came out. We knew there was something special.",
-      image: "/images/s2.webp",
+      image: "/images/s2.jpeg",
     },
     {
       title: "The Proposal",
       date: "December 2025",
       description: "A surprise trip to Udaipur. Overlooking the Pichola lake at sunset, Vikram went down on one knee.",
-      image: "/images/s3.webp",
-    }
+      image: "/images/s3.jpeg",
+    },
   ],
   events: [
     {
@@ -63,7 +63,7 @@ export const weddingConfig = {
       dressCode: "Yellow / White Traditional",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Royal%20Palace%20Gardens%2C%20Jaipur%2C%20Rajasthan",
       description: "Join us for a morning of vibrant colors, traditional music, and the beautiful Haldi ritual to bless the couple.",
-      image: "/images/haldi.webp"
+      image: "/images/haldi.png",
     },
     {
       id: "Mehndi",
@@ -74,7 +74,7 @@ export const weddingConfig = {
       dressCode: "Glamorous / Indo-Western",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Grand%20Durbar%20Hall%2C%20Jaipur%2C%20Rajasthan",
       description: "An evening of dance, music, and celebration. Bring your dancing shoes!",
-      image: "/images/mehndi.webp"
+      image: "/images/mehndi.png",
     },
     {
       id: "ring",
@@ -85,7 +85,7 @@ export const weddingConfig = {
       dressCode: "Elegant Traditional",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Royal%20Ballroom%2C%20Jaipur%2C%20Rajasthan",
       description: "Join us as we exchange rings and begin our journey together with our loved ones.",
-      image: "/images/ring.webp"
+      image: "/images/ring.png",
     },
     {
       id: "wedding",
@@ -96,40 +96,40 @@ export const weddingConfig = {
       dressCode: "Traditional / Formals",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Lakefront%20Pavilion%2C%20Jaipur%2C%20Rajasthan",
       description: "The moment we tie the knot. Sunset pheras followed by a grand reception dinner.",
-      image: "/images/wedding.webp"
-    }
+      image: "/images/wedding.png",
+    },
   ],
-  gallery: [	
-    "/images/g1.webp",
-    "/images/g2.webp",
-    "/images/g3.webp",
-    "/images/g4.webp",
-    "/images/g5.webp",
-    "/images/g6.webp"
+  gallery: [
+    "/images/g1.png",
+    "/images/g2.png",
+    "/images/g3.png",
+    "/images/g4.png",
+    "/images/g5.png",
+    "/images/g6.png",
   ],
   family: {
     bride: [
-      { name: "Rahul Sharma", relation: "Brother", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400" },
-      { name: "Priya Sharma", relation: "Sister", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400" }
+      { name: "Rahul Sharma", relation: "Brother", image: "/images/family_rahul.jpg" },
+      { name: "Priya Sharma", relation: "Sister", image: "/images/family_priya.jpg" },
     ],
     groom: [
-      { name: "Aditya Singh", relation: "Brother", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" },
-      { name: "Neha Singh", relation: "Sister", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400" }
-    ]
+      { name: "Aditya Singh", relation: "Brother", image: "/images/family_aditya.jpg" },
+      { name: "Neha Singh", relation: "Sister", image: "/images/family_neha.jpg" },
+    ],
   },
   scratchCard: {
     title: "Scratch to Reveal the Wedding Date",
     dateText: "November 20, 2026 • Jaipur, Rajasthan",
     blessingText: "You are cordially invited to witness our royal union!",
-    revealedTitle: "Date & Details Revealed!"
+    revealedTitle: "Date & Details Revealed!",
   },
   travel: {
     airport: "Jaipur International Airport (JAI)\nApprox. 30 minutes drive from the venue.",
     railway: "Jaipur Junction (JP)\nApprox. 20 minutes drive from the venue.",
-    hotelsNotice: "We have arranged block bookings at nearby properties. Please mention '#AnanyaGotVikramed' while booking to avail special rates."
+    hotelsNotice: "We have arranged block bookings at nearby properties. Please mention '#AnanyaGotVikramed' while booking to avail special rates.",
   },
   contact: {
     email: "wedding@ananyavikram.com",
-    phone: "+91 98765 43210"
-  }
+    phone: "+91 98765 43210",
+  },
 };

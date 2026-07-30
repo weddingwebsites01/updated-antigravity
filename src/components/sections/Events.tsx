@@ -26,7 +26,7 @@ export function Events() {
             return (
               <div
                 key={event.id}
-                className="group relative bg-maroon-800 rounded-2xl p-4 border border-gold-500/30 hover:border-gold-500/80 transition-colors duration-300 flex flex-col justify-between shadow-lg"
+                className="relative bg-maroon-800 rounded-2xl p-4 border border-gold-500/30 flex flex-col justify-between shadow-lg"
               >
                 <div>
                   <div className="aspect-[3/4] overflow-hidden rounded-xl mb-4 relative border border-gold-500/20">
@@ -34,7 +34,7 @@ export function Events() {
                       src={event.image}
                       alt={event.title}
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      loading="eager"
                     />
                     <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-20">
                       <h3 className="text-xl sm:text-2xl font-display text-gold-400 font-bold drop-shadow">

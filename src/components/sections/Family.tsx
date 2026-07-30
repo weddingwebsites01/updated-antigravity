@@ -29,12 +29,12 @@ export function Family() {
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {weddingConfig.family.bride.map((member, index) => (
                 <div key={index} className="text-center">
-                  <div className="relative aspect-square overflow-hidden rounded-full mb-3 sm:mb-4 mx-auto max-w-[140px] sm:max-w-[170px] border-2 border-gold-500/40 p-1 shadow-md">
+                  <div className="relative aspect-square overflow-hidden rounded-full mb-3 sm:mb-4 mx-auto max-w-[140px] sm:max-w-[170px] border-2 border-gold-500/40 p-1 shadow-md bg-white">
                     <img
                       src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover rounded-full"
-                      loading="lazy"
+                      loading="eager"
                     />
                   </div>
                   <h4 className="font-display text-base sm:text-lg text-maroon-900 font-bold">
@@ -56,12 +56,12 @@ export function Family() {
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {weddingConfig.family.groom.map((member, index) => (
                 <div key={index} className="text-center">
-                  <div className="relative aspect-square overflow-hidden rounded-full mb-3 sm:mb-4 mx-auto max-w-[140px] sm:max-w-[170px] border-2 border-gold-500/40 p-1 shadow-md">
+                  <div className="relative aspect-square overflow-hidden rounded-full mb-3 sm:mb-4 mx-auto max-w-[140px] sm:max-w-[170px] border-2 border-gold-500/40 p-1 shadow-md bg-white">
                     <img
                       src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover rounded-full"
-                      loading="lazy"
+                      loading="eager"
                     />
                   </div>
                   <h4 className="font-display text-base sm:text-lg text-maroon-900 font-bold">

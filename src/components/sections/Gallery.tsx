@@ -24,13 +24,13 @@ export function Gallery() {
           {weddingConfig.gallery.map((img, index) => (
             <div
               key={index}
-              className="break-inside-avoid overflow-hidden rounded-xl border border-gold-500/20 shadow-md hover:shadow-xl transition-shadow"
+              className="break-inside-avoid overflow-hidden rounded-xl border border-gold-500/20 shadow-md"
             >
               <img
                 src={img}
                 alt="Gallery moment"
-                className="w-full h-auto"
-                loading="lazy"
+                className="w-full h-auto block"
+                loading="eager"
               />
             </div>
           ))}
