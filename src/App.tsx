@@ -13,6 +13,7 @@ import { Story } from "./components/sections/Story";
 import { Events } from "./components/sections/Events";
 import { Gallery } from "./components/sections/Gallery";
 import { Family } from "./components/sections/Family";
+import { Rsvp } from "./components/sections/Rsvp";
 import { Venue } from "./components/sections/Venue";
 import { Footer } from "./components/Footer";
 import { GoldParticles } from "./components/GoldParticles";
@@ -48,6 +49,7 @@ export default function App() {
             <Events />
             <Gallery />
             <Family />
+            <Rsvp />
             <Venue />
           </main>
           <Footer />

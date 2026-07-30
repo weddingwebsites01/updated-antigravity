@@ -11,6 +11,7 @@ const navItems = [
   { id: "events", label: "Events", href: "#events" },
   { id: "gallery", label: "Gallery", href: "#gallery" },
   { id: "family", label: "Family", href: "#family" },
+  { id: "rsvp", label: "RSVP", href: "#rsvp" },
   { id: "venue", label: "Venue", href: "#venue" },
 ];
 
@@ -59,7 +60,7 @@ export function Navigation() {
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -100,9 +101,9 @@ export function Navigation() {
             animate={{ opacity: 1, y: "0%" }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed inset-0 z-40 bg-maroon-900 flex flex-col items-center justify-center space-y-8 px-6 text-center border-b-2 border-gold-500/40"
+            className="fixed inset-0 z-40 bg-maroon-900 flex flex-col items-center justify-center space-y-7 px-6 text-center border-b-2 border-gold-500/40"
           >
-            <div className="w-16 h-16 rounded-full border border-gold-500/40 flex items-center justify-center mb-2">
+            <div className="w-16 h-16 rounded-full border border-gold-500/40 flex items-center justify-center mb-1">
               <Crown className="w-8 h-8 text-gold-400" />
             </div>
 
@@ -112,7 +113,7 @@ export function Navigation() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "text-2xl font-display tracking-widest uppercase py-1 border-b border-transparent hover:border-gold-400 transition-all",
+                  "text-xl font-display tracking-widest uppercase py-1 border-b border-transparent hover:border-gold-400 transition-all",
                   activeSection === item.id
                     ? "text-gold-400 font-bold border-gold-400"
                     : "text-ivory-200/80"
