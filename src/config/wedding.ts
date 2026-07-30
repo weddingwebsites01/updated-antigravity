@@ -1,5 +1,5 @@
 export const weddingConfig = {
-  heroBannerImage: "/images/banner2.png",
+  heroBannerImage: "/images/banner2.webp",
   musicUrl: "/music/song.mp3",
   video: {
     opening: "/video/intro.mp4",
@@ -38,19 +38,19 @@ export const weddingConfig = {
       title: "How We Met",
       date: "August 2022",
       description: "A chance encounter at a mutual friend's art gallery opening. A conversation about a painting led to a coffee date the next day.",
-      image: "/images/s1.jpeg",
+      image: "/images/s1.webp",
     },
     {
       title: "The First Date",
       date: "September 2022",
       description: "A beautiful evening by the lake, talking for hours until the stars came out. We knew there was something special.",
-      image: "/images/s2.jpeg",
+      image: "/images/s2.webp",
     },
     {
       title: "The Proposal",
       date: "December 2025",
       description: "A surprise trip to Udaipur. Overlooking the Pichola lake at sunset, Vikram went down on one knee.",
-      image: "/images/s3.jpeg",
+      image: "/images/s3.webp",
     },
   ],
   events: [
@@ -63,7 +63,7 @@ export const weddingConfig = {
       dressCode: "Yellow / White Traditional",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Royal%20Palace%20Gardens%2C%20Jaipur%2C%20Rajasthan",
       description: "Join us for a morning of vibrant colors, traditional music, and the beautiful Haldi ritual to bless the couple.",
-      image: "/images/haldi.png",
+      image: "/images/haldi.webp",
     },
     {
       id: "Mehndi",
@@ -74,7 +74,7 @@ export const weddingConfig = {
       dressCode: "Glamorous / Indo-Western",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Grand%20Durbar%20Hall%2C%20Jaipur%2C%20Rajasthan",
       description: "An evening of dance, music, and celebration. Bring your dancing shoes!",
-      image: "/images/mehndi.png",
+      image: "/images/mehndi.webp",
     },
     {
       id: "ring",
@@ -85,7 +85,7 @@ export const weddingConfig = {
       dressCode: "Elegant Traditional",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Royal%20Ballroom%2C%20Jaipur%2C%20Rajasthan",
       description: "Join us as we exchange rings and begin our journey together with our loved ones.",
-      image: "/images/ring.png",
+      image: "/images/ring.webp",
     },
     {
       id: "wedding",
@@ -96,16 +96,16 @@ export const weddingConfig = {
       dressCode: "Traditional / Formals",
       mapUrl: "https://www.google.com/maps/dir/?api=1&destination=The%20Lakefront%20Pavilion%2C%20Jaipur%2C%20Rajasthan",
       description: "The moment we tie the knot. Sunset pheras followed by a grand reception dinner.",
-      image: "/images/wedding.png",
+      image: "/images/wedding.webp",
     },
   ],
   gallery: [
-    "/images/g1.png",
-    "/images/g2.png",
-    "/images/g3.png",
-    "/images/g4.png",
-    "/images/g5.png",
-    "/images/g6.png",
+    "/images/g1.webp",
+    "/images/g2.webp",
+    "/images/g3.webp",
+    "/images/g4.webp",
+    "/images/g5.webp",
+    "/images/g6.webp",
   ],
   family: {
     bride: [
