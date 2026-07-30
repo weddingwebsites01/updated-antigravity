@@ -28,13 +28,13 @@ export function Rsvp() {
 
     setIsSubmitting(true);
 
-    // Format WhatsApp Message professionally
     const eventListText =
       selectedEvents.length > 0
         ? selectedEvents.map((ev) => `• ${ev}`).join("\n")
         : "• Not specified";
 
-    const formattedMessage = `🌸 *Royal Wedding RSVP* 🌸\n\n` +
+    const formattedMessage =
+      `🌸 *Royal Wedding RSVP* 🌸\n\n` +
       `*Name:* ${guestName.trim()}\n` +
       (mobileNumber.trim() ? `*Mobile:* ${mobileNumber.trim()}\n` : "") +
       `*Attendance:* ${attendanceStatus}\n` +
@@ -50,7 +50,7 @@ export function Rsvp() {
       setIsSubmitting(false);
       setIsSuccess(true);
       window.open(whatsappUrl, "_blank");
-      
+
       setTimeout(() => setIsSuccess(false), 5000);
     }, 600);
   };
@@ -127,7 +127,7 @@ export function Rsvp() {
                       type="button"
                       key={status}
                       onClick={() => setAttendanceStatus(status)}
-                      className={`py-2.5 rounded-xl text-xs font-display tracking-wider font-semibold transition-all border ${
+                      className={`py-2.5 rounded-xl text-xs font-display tracking-wider font-semibold transition-all border cursor-pointer ${
                         attendanceStatus === status
                           ? "bg-gold-500 text-maroon-900 border-gold-400 shadow-md"
                           : "bg-black/30 text-ivory-200 border-gold-500/20 hover:border-gold-500/50"
@@ -157,7 +157,7 @@ export function Rsvp() {
               </div>
             </div>
 
-            {/* Dynamic Event Checkboxes */}
+            {/* Dynamic Event Checkboxes - Easily Selectable Button Grid */}
             <div>
               <label className="block text-xs font-display tracking-widest uppercase text-gold-400 mb-3 font-semibold">
                 Which Events Will You Attend?
@@ -166,23 +166,18 @@ export function Rsvp() {
                 {weddingConfig.events.map((event) => {
                   const isChecked = selectedEvents.includes(event.title);
                   return (
-                    <label
+                    <button
+                      type="button"
                       key={event.id}
                       onClick={() => toggleEvent(event.title)}
-                      className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${
+                      className={`flex items-center gap-3 p-3.5 rounded-xl border text-left cursor-pointer transition-all ${
                         isChecked
-                          ? "bg-gold-500/15 border-gold-500 text-ivory-100"
-                          : "bg-black/20 border-gold-500/20 text-ivory-200/60 hover:border-gold-500/40"
+                          ? "bg-gold-500/20 border-gold-400 text-ivory-100 shadow-sm"
+                          : "bg-black/30 border-gold-500/20 text-ivory-200/60 hover:border-gold-500/40"
                       }`}
                     >
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => {}}
-                        className="hidden"
-                      />
                       <div
-                        className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${
+                        className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
                           isChecked
                             ? "bg-gold-500 border-gold-500 text-maroon-900"
                             : "border-gold-500/40"
@@ -193,7 +188,7 @@ export function Rsvp() {
                       <span className="text-xs sm:text-sm font-display font-medium">
                         {event.title}
                       </span>
-                    </label>
+                    </button>
                   );
                 })}
               </div>

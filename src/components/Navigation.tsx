@@ -11,8 +11,8 @@ const navItems = [
   { id: "events", label: "Events", href: "#events" },
   { id: "gallery", label: "Gallery", href: "#gallery" },
   { id: "family", label: "Family", href: "#family" },
-  { id: "rsvp", label: "RSVP", href: "#rsvp" },
   { id: "venue", label: "Venue", href: "#venue" },
+  { id: "rsvp", label: "RSVP", href: "#rsvp" },
 ];
 
 export function Navigation() {
